@@ -7,54 +7,54 @@ import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
 
-class Item
-{
+class Item {
   final String id;
   String name = "";
 
   Item({required this.id});
 }
 
-class MyItemList
-{
-  List <Item> myItemList=[];
+class MyItemList {
+  List<Item> myItemList = [];
   Uuid _uuid = Uuid();
   bool debug = false;
 
   @override
-  String toString()
-  {
+  String toString() {
     return "not implemented.";
   }
 
   //Main constructor
-  MyItemList({this.debug=false})
-  {
+  MyItemList({this.debug = false}) {
     //Load list from db or create a new one
-    _loadList() ? (){if (debug) {
-      print("No database to load, creating new environment");
-    }}:_createNewRoot();
+    _loadList()
+        ? () {
+            if (debug) {
+              print("No database to load, creating new environment");
+            }
+          }
+        : _createNewRoot();
   }
-
-
 
 //### Private functions
   bool _loadList() {
     return false;
   }
 
-  _createNewRoot()
-  {
-    Item rootItem = Item(id: _uuid.v4(),);
+  _createNewRoot() {
+    Item rootItem = Item(
+      id: _uuid.v4(),
+    );
     rootItem.name = "<root>";
     myItemList.add(rootItem);
     saveList();
   }
 
 //### Public functions
-  saveList()
-  {
+  Future<bool> saveList() {
+    return Future.delayed(
+      const Duration(milliseconds: 10),
+      () => true,
+    );
   }
-
 }
-
