@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'models/item.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,17 +14,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Krempel',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Krempel Home'),
+      home: MyHomePage(title: 'Krempel Home'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  MyHomePage({super.key, required this.title});
+
   final String title;
+  MyItemList items = MyItemList(
+    debug: true,
+  );
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -33,7 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -48,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
+      floatingActionButton:  FloatingActionButton(
+        onPressed: () => print("Foo"),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

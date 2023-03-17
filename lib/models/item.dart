@@ -5,17 +5,21 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_util.dart';
+import '/models/datahandler.dart';
 
 class Item {
   final String id;
+  final String parent;
   String name = "";
 
-  Item({required this.id});
+
+  Item({required this.id, required this.parent});
 }
 
 class MyItemList {
   List<Item> myItemList = [];
+  late Future<String> root;
+  Future <DataConnector> dataConnector = DataConnector.create();
   Uuid _uuid = Uuid();
   bool debug = false;
 
@@ -25,36 +29,17 @@ class MyItemList {
   }
 
   //Main constructor
-  MyItemList({this.debug = false}) {
-    //Load list from db or create a new one
-    _loadList()
-        ? () {
-            if (debug) {
-              print("No database to load, creating new environment");
-            }
-          }
-        : _createNewRoot();
-  }
+  MyItemList({this.debug = false});
 
-//### Private functions
-  bool _loadList() {
-    return false;
-  }
+
 
   _createNewRoot() {
     Item rootItem = Item(
       id: _uuid.v4(),
+      parent:"<root>",
     );
     rootItem.name = "<root>";
     myItemList.add(rootItem);
-    saveList();
   }
 
-//### Public functions
-  Future<bool> saveList() {
-    return Future.delayed(
-      const Duration(milliseconds: 10),
-      () => true,
-    );
-  }
 }
